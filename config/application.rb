@@ -21,7 +21,11 @@ module AwsBotApi
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    # don't generate RSpec tests for views and helpers
 
+    config.autoload_paths += %W(#{Rails.root}/lib)
+    config.eager_load_paths += %W(#{Rails.root}/lib/modules)
+    config.eager_load_paths += Dir["#{Rails.root}/lib/modules/**/"]
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
