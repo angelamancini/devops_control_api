@@ -21,3 +21,4 @@
 .byebug_history
 .vagrant
 tmux-client-*.log
+.DS_Store
