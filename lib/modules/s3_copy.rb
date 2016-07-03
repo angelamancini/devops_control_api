@@ -1,8 +1,15 @@
 require 'aws-sdk'
 
 class S3Copy
+  # Initialize the data passed in from controller
+  # @param data['region'] [String] the aws region, defaults to 'us-east-1'
+  # @param data['source_bucket'] [String] the originating s3 bucket
+  # @param data['file_name'] [String] the file name with path relative to the
+  # source bucket
+  # @param data['destination'] [String] the file name with full path of the
+  # destination s3 bucket
+  # @return [aws s3 object]
   def initialize(data)
-    # puts data
     region = data['region'] ||= 'us-east-1'
     @source_bucket = data['source_bucket']
     @file_name = data['file_name']
@@ -12,13 +19,16 @@ class S3Copy
     )
   end
 
+  # Takes the aws api s3 object and sets the bucket
+  # @param bucket [String] the s3 bucket to perform operations on
   def get_bucket(bucket)
     @s3.bucket(bucket)
   end
 
-  # does the file exist in the bucket?
+  # Does the file exist in the bucket?
   # @param bucket [String] the name of the s3 bucket
   # @param file [String] the name of the file
+  # @return [true, false]
   def check_file(bucket, file)
     bucket = get_bucket(bucket)
     response = bucket.object(file).exists?
@@ -29,6 +39,10 @@ class S3Copy
     end
   end
 
+  # Takes params from initializer and passes them to #check_file
+  # @param bucket [String] the name of the s3 bucket
+  # @param file [String] the name of the file
+  # @return [Json] returns appropriate http status and message
   def file_exists
     if check_file(@source_bucket, @file_name)
       [200,{ message: "#{@file_name} exists." }.to_json]
@@ -38,6 +52,12 @@ class S3Copy
   end
 
   # copy specific file from one folder to another
+  # @param @source_bucket [String] the originating s3 bucket
+  # @param @file_name [String] the file name with path relative to the source
+  # bucket
+  # @param @destination [String] the file name with full path of the destination
+  # s3 bucket
+  # @return [Json] returns appropriate http status and message
   def copy_file
     bucket = get_bucket(@source_bucket)
     object = bucket.object(@file_name)
