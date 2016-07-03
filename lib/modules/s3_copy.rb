@@ -17,6 +17,8 @@ class S3Copy
   end
 
   # does the file exist in the bucket?
+  # @param bucket [String] the name of the s3 bucket
+  # @param file [String] the name of the file
   def check_file(bucket, file)
     bucket = get_bucket(bucket)
     response = bucket.object(file).exists?
