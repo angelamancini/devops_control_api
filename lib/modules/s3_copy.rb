@@ -2,6 +2,10 @@ require 'aws-sdk'
 
 class S3Copy
   # Initialize the data passed in from controller
+  #
+  # @example
+  #   S3Copy.copy_file.new(params) # => Json with http status and message
+  #
   # @param data['region'] [String] the aws region, defaults to 'us-east-1'
   # @param data['source_bucket'] [String] the originating s3 bucket
   # @param data['file_name'] [String] the file name with path relative to the
@@ -20,12 +24,21 @@ class S3Copy
   end
 
   # Takes the aws api s3 object and sets the bucket
+  #
+  # @example
+  #   get_bucket(bucket_name) # => <Aws::S3::Bucket>
+  #
   # @param bucket [String] the s3 bucket to perform operations on
+  # @return [aws s3 bucket object]
   def get_bucket(bucket)
     @s3.bucket(bucket)
   end
 
   # Does the file exist in the bucket?
+  #
+  # @example
+  #   check_file(bucket, file) # => true
+  #
   # @param bucket [String] the name of the s3 bucket
   # @param file [String] the name of the file
   # @return [true, false]
@@ -39,7 +52,11 @@ class S3Copy
     end
   end
 
-  # Takes params from initializer and passes them to #check_file
+  # Takes params from initializer and passes them to #check_file method
+  #
+  # @example
+  #   S3Copy.file_exists.new(params) # => Json with http status and message
+  #
   # @param bucket [String] the name of the s3 bucket
   # @param file [String] the name of the file
   # @return [Json] returns appropriate http status and message
@@ -51,7 +68,11 @@ class S3Copy
     end
   end
 
-  # copy specific file from one folder to another
+  # Copies a specific file from one s3 bucket to another
+  #
+  # @example
+  #   S3Copy.copy_file.new(params) # => Json with http status and message
+  #
   # @param @source_bucket [String] the originating s3 bucket
   # @param @file_name [String] the file name with path relative to the source
   # bucket
