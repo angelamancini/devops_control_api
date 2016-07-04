@@ -7,7 +7,11 @@ describe S3Copy do
     end
   end
 
-  describe '#check_file'
+  describe '#check_file' do
+    it 'returns true if file exists' do
+      expect(S3Copy.new({region: 'us-east-1'}).check_file('test-bucket','file')).to eq(true)
+    end
+  end
 
   describe '#file_exists'
 
