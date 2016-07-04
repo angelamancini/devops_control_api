@@ -27,7 +27,8 @@ SimpleCov.start do
 
   # add_group "Models", "app/models"
   add_group "Controllers", "app/controllers"
-  add_group "Requests", "app/requests"
+  add_group "Lib", "lib"
+
 end
 
 RSpec.configure do |config|
