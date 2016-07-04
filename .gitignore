@@ -22,3 +22,4 @@
 .vagrant
 tmux-client-*.log
 .DS_Store
+coverage/

@@ -12,7 +12,7 @@ class S3Copy
   # source bucket
   # @param data['destination'] [String] the file name with full path of the
   # destination s3 bucket
-  # @return [aws s3 object]
+  # @return [#<Aws::S3::Resource>]
   def initialize(data)
     region = data['region'] ||= 'us-east-1'
     @source_bucket = data['source_bucket']
@@ -26,10 +26,10 @@ class S3Copy
   # Takes the aws api s3 object and sets the bucket
   #
   # @example
-  #   get_bucket(bucket_name) # => <Aws::S3::Bucket>
+  #   get_bucket(bucket_name) # => #<Aws::S3::Bucket name="bucket name">
   #
   # @param bucket [String] the s3 bucket to perform operations on
-  # @return [aws s3 bucket object]
+  # @return [#<Aws::S3::Bucket name="bucket name">]
   def get_bucket(bucket)
     @s3.bucket(bucket)
   end
