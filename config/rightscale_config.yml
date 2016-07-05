@@ -1,0 +1,10 @@
+common: &common
+  rightscale-email: <%= ENV['RIGHTSCALE_EMAIL'] %>
+  rightscale-password: <%= ENV['RIGHTSCALE_PASSWORD'] %>
+  accounts:
+    -
+      name: 'account name'
+      id: 'account id'
+
+<%= Rails.env %>:
+  <<: *common

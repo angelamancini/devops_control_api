@@ -3,18 +3,12 @@ module Rightscale
   class ServerInstance
     class << self
       def get_server(server_id, cloud_id, account_id)
-        client = RightApi::Client.new(email: RIGHTSCALE_CONFIG['rightscale-email'],
-        password: RIGHTSCALE_CONFIG['rightscale-password'],
-        account_id: account_id,
-        timeout: nil)
+        client = Rightscale::Common.client(account_id)
         client.clouds(id: cloud_id).show.instances(id: server_id).show
       end
 
       def get_datacenter(server_href, account_id)
-        client = RightApi::Client.new(email: RIGHTSCALE_CONFIG['rightscale-email'],
-        password: RIGHTSCALE_CONFIG['rightscale-password'],
-        account_id: account_id,
-        timeout: nil)
+        client = Rightscale::Common.client(account_id)
         server_id = server_href.split('/').last
         cloud_id = server_href.split('/')[3]
         server = client.clouds(:id=> cloud_id).show.instances.index(:view=>'full',:id=>server_id).show.datacenter.show.name
@@ -24,7 +18,6 @@ module Rightscale
         server_id = server_href.split('/').last
         cloud_id = server_href.split('/')[3]
         server = get_server(server_id, cloud_id, account_id)
-        # Rails.logger.debug "#{server.name}: #{server.state}"
         return server.state
       end
 
@@ -33,7 +26,6 @@ module Rightscale
         server = get_server(server_id, cloud_id, account_id)
         begin
           if server.state != 'terminated'
-            # Rails.logger.debug "Terminating #{server.name} in account #{account_id}"
             server.terminate
             terminated = true
           end

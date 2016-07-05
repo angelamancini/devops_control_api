@@ -2,21 +2,13 @@ module Rightscale
   require 'right_api_client'
   class AuditEntry
     class << self
-      # connects to the RightScale api and returns the server array
-      def connect_to_rightscale(account_id)
-        client = RightApi::Client.new(email: RIGHTSCALE_CONFIG['rightscale-email'],
-        password: RIGHTSCALE_CONFIG['rightscale-password'],
-        account_id: account_id,
-        timeout: nil)
-        return client
-      end
 
       # returns array of audit_entry objects
       def get_audit_entries(account_id, server_id, cloud_id)
         begin
           server = Rightscale::ServerInstance.get_server(server_id, cloud_id, account_id)
           puts "getting audit entries for #{server.name}"
-          client = connect_to_rightscale(account_id)
+          client = Rightscale::Common.client(account_id)
           entries = client.audit_entries.index(start_date: server.created_at, end_date: Time.now.strftime('%Y/%m/%d %H:%M:%S %z'), limit: 50, filters: { auditee_href: server.href })
           entries_array = []
           entries.each do |entry|

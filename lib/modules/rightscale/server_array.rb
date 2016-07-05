@@ -2,22 +2,14 @@ module Rightscale
   require 'right_api_client'
   class SArray
     class << self
-      # connects to the RightScale api and returns the server array
-      def connect_to_rightscale(account_id)
-        client = RightApi::Client.new(email: RIGHTSCALE_CONFIG['rightscale-email'],
-        password: RIGHTSCALE_CONFIG['rightscale-password'],
-        account_id: account_id,
-        timeout: nil)
-        return client
-      end
       def get_server_array(array_href, account_id)
         array_id = array_href.gsub('/api/server_arrays/','')
-        client = connect_to_rightscale(account_id)
+        client = Rightscale::Common.client(account_id)
         client.server_arrays(id: array_id).show
       end
 
       def server_array_list(account_id)
-        client = connect_to_rightscale(account_id)
+        client = Rightscale::Common.client(account_id)
         options = []
         all_arrays = client.server_arrays.index
         all_arrays.each do |server_array|
@@ -71,7 +63,7 @@ module Rightscale
         rescue RightApi::ApiError => e
           account = RIGHTSCALE_CONFIG['accounts'].select { |x| x["id"] == "#{account_id}" }
           account_name = account.first['name']
-          raise ArgumentError, "#{server_array.name} (#{account_name} account) - Missing Input Error: #{e.message.split('Response body:').last.gsub("\n",'').gsub('----','').gsub('|-','').strip}"
+          raise ArgumentError, "#{server_array.name} (#{account_name} account): #{e.message.split('Response body:').last.gsub("\n",'').gsub('----','').gsub('|-','').strip}"
         end
         return launched_servers
 

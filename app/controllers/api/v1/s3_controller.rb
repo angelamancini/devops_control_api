@@ -5,21 +5,21 @@ module Api::V1
 
     # GET /v1/s3/:bucket/:file_name/file_exists
     def file_exists
-      region = params[:region]
-      bucket = params[:source_bucket]
-      file = params[:file_name]
-      http_status, data = S3::CopyFile.new.copy_file(region, bucket, file)
+      http_status, data = S3::CopyFile.new.copy_file( params[:region],
+                                                      params[:source_bucket],
+                                                      params[:file_name]
+                                                    )
       status http_status
       data
     end
 
     # POST /v1/s3/:bucket/file_copy
     def file_copy
-      region = params[:region]
-      bucket = params[:source_bucket]
-      file = params[:file_name]
-      destination = params[:destination]
-      http_status, data = S3::CopyFile.new.file_exists(region, source_bucket, file, destination)
+      http_status, data = S3::CopyFile.new.file_exists( params[:region],
+                                                        params[:source_bucket],
+                                                        params[:file_name],
+                                                        params[:destination]
+                                                      )
       status http_status
       data
     end
