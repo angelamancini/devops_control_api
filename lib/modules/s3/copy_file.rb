@@ -67,12 +67,12 @@ require 'aws-sdk'
     # s3 bucket
     # @return [Json] returns appropriate http status and message
     def copy_file(region, source_bucket, file, destination)
-      bucket = get_bucket(region, source_bucket)
+      bucket = CopyFile.get_bucket(region, source_bucket)
       object = bucket.object(file)
       destination_bucket = destination.split('/').first
       destination_file = destination.gsub("#{destination_bucket}/",'')
-      dest_file_already_there = check_file(destination_bucket,destination_file)
-      if check_file(source_bucket, file)
+      dest_file_already_there = check_file(region, destination_bucket, destination_file)
+      if check_file(region, source_bucket, file)
         if dest_file_already_there
           [200,{ message: "#{file} exists." }.to_json]
         else
