@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Api::V1::S3Controller do
-  # before(:each) { request.headers['Accept'] = "application/vnd.marketplace.v1" }
+  # before(:each) { request.headers['Accept'] = "application/doc" }
 
   describe "GET #file_exists" do
     before(:each) do
