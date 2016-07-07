@@ -7,8 +7,8 @@ module CloudFlare
     # @example
     #   find_rule(domain, app_url) # => "701c50406003184a801df0e53ca0532f"
     #
-    # @param region [String] the aws region the bucket is in
-    # @param bucket [String] the s3 bucket to perform operations on
+    # @param domain [String] the domain of the url
+    # @param app_url [String] the application url
     # @return [String] returns the rule_id as a string
     def find_rule(domain, app_url)
       client, zone_id = CloudFlare::Common.connect(domain)
