@@ -2,10 +2,17 @@ module CloudFlare
   require 'rubyflare'
 
   class PageRule
+    # Pulls the page rules from the zone and finds the desired rule by url
+    #
+    # @example
+    #   find_rule(domain, app_url) # => "701c50406003184a801df0e53ca0532f"
+    #
+    # @param region [String] the aws region the bucket is in
+    # @param bucket [String] the s3 bucket to perform operations on
+    # @return [String] returns the rule_id as a string
     def find_rule(domain, app_url)
-      client = CloudFlare::Common.connect
-      zones = CloudFlare::Common.zones(domain)
-      rules = client.get( "zones/#{zones.result[:id]}/pagerules")
+      client, zone_id = CloudFlare::Common.connect(domain)
+      rules = client.get( "zones/#{zone_id}/pagerules")
       rule_id = nil
       rules.results.each do |result|
         if result[:targets].first[:constraint][:value] == "#{app_url}/*"
@@ -16,8 +23,7 @@ module CloudFlare
     end
 
     def create_rule(domain, app_url, forwarding_url)
-      client = CloudFlare::Common.connect
-      zone_id = CloudFlare::Common.zone(domain)
+      client, zone_id = CloudFlare::Common.connect(domain)
       redirect_url_rule ={
                             targets: [
                               {
@@ -39,15 +45,14 @@ module CloudFlare
                             ],
                             status: "active"
                           }
-      rule = client.post( "zones/#{zones_id}/pagerules",
+      rule = client.post( "zones/#{zone_id}/pagerules",
                               redirect_url_rule
                             )
       return rule
     end
 
     def delete_rule(domain, rule_id)
-      client = CloudFlare::Common.connect
-      zone_id = CloudFlare::Common.zone(domain)
+      client, zone_id = CloudFlare::Common.connect(domain)
       rule = client.delete("zones/#{zone_id}/pagerules/#{rule_id}")
       return rule
     end
