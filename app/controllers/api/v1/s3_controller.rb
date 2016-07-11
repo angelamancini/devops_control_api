@@ -5,34 +5,22 @@ module Api::V1
 
     # GET /v1/s3/:bucket/file_exists
     def show
-      binding.pry
-      # http_status, data =
-      S3::CopyFile.new.file_exists( params[:region],
-                                    params[:bucket],
-                                    params[:file]
-                                  )
-
-      # status http_status
-      # data
+      # binding.pry
+      @http_status, @data = S3::CopyFile.new.file_exists( request.headers['region'],
+                                                        params[:bucket],
+                                                        request.headers['file']
+                                                      )
+      render json: @data, status: @http_status
     end
 
     # POST /v1/s3/:bucket/file_copy
     def create
-      http_status, data = S3::CopyFile.new.copy_file( params[:region],
+      @http_status, @data = S3::CopyFile.new.copy_file( request.headers['region'],
                                                       params[:bucket],
-                                                      params[:file],
-                                                      params[:destination]
+                                                      request.headers['file'],
+                                                      request.headers['destination']
                                                       )
-      status http_status
-      data
-    end
-
-    def index
-      @files = [
-        { name: 'file.txt' },
-        { name: 'image.png'}
-      ]
-      render json: @files
+      render json: @data, status: @http_status
     end
   end
 end
