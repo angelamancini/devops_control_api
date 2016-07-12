@@ -1,7 +1,7 @@
 # app/controllers/api/v1/ec2_controller.rb
 
 module Api::V1
-  class Ec2Controller < ApiController
+  class Ec2LookupController < ApiController
 
     # GET /ec2/lookup_instance
     def index
