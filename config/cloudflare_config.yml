@@ -1,6 +1,6 @@
 common: &common
-  email: 'CLOUDFLARE_EMAIL'
-  api_key: 'CLOUDFLARE_API_KEY'
+  email: <%= ENV['CLOUDFLARE_EMAIL'] %>
+  api_key: <%= ENV['CLOUDFLARE_API_KEY'] %>
 
 <%= Rails.env %>:
   <<: *common

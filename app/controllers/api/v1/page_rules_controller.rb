@@ -2,17 +2,19 @@ module Api::V1
   class PageRulesController < ApiController
 
     # post /cloudflare/page_rule/new
-    def index
-      # @http_status, @data = Ec2::LookupInstance.new.lookup( request.headers['region'],
-      #                                                       request.headers['filter']
-      #                                                     )
-      # render json: @data, status: @http_status
-    end
-
     def create
+      @http_status, @data = Cloudflare::PageRule.new.create_redirect( params[:zone],
+                                                                      params[:app_url],
+                                                                      params[:forward_url]
+                                                                    )
+      render json: @data, status: @http_status
     end
 
     def delete
+      @http_status, @data = Cloudflare::PageRule.new.delete_rule( params[:zone],
+                                                                  params[:app_url]
+                                                                )
+      render json: @data, status: @http_status
     end
   end
 end
