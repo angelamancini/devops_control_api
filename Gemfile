@@ -37,6 +37,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails'
   gem 'ffaker'
+  gem 'webmock'
+  gem 'vcr'
 end
 
 group :test do
