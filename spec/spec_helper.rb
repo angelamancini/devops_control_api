@@ -27,6 +27,10 @@ SimpleCov.start do
   add_filter '/coverage/'
   add_filter '/spec/*'
   add_filter '/spec/support'
+  add_filter '/app/channels'
+  add_filter '/app/jobs'
+  add_filter '/app/mailers'
+  add_filter '/app/models/application_record.rb'
 
   # add_group "Models", "app/models"
   add_group "Controllers", "app/controllers"

@@ -52,7 +52,7 @@ module Cloudflare
         return [201, { message: "Temporary redirect created on #{app_url} to #{forwarding_url}"}.to_json]
       rescue => e
         puts "An error occured."
-        [404, { message: "#{e.response.errors} - #{e.response.messages}" }.to_json ]
+        [400, { message: "#{e.response.errors} - #{e.response.messages}" }.to_json ]
       end
 
     end
