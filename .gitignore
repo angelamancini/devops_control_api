@@ -24,3 +24,4 @@ tmux-client-*.log
 .DS_Store
 coverage/
 config/*_config.yml
+spec/fixtures/vcr_cassettes/*

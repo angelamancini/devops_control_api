@@ -15,9 +15,7 @@ module Cloudflare
       rules = client.get( "zones/#{zone_id}/pagerules")
       rule_id = nil
       rules.results.each do |result|
-        if result[:targets].first[:constraint][:value] == "#{app_url}/*" && result[:actions].first[:value][:status_code] == 302
-          rule_id = result[:id]
-        end
+
       end
       return rule_id
     end
@@ -49,7 +47,7 @@ module Cloudflare
         rule = client.post( "zones/#{zone_id}/pagerules",
                             redirect_url_rule
                           )
-        return [201, { message: "Temporary redirect created on #{app_url} to #{forwarding_url}"}.to_json]
+        return [201, rule.to_json]
       rescue => e
         puts "An error occured."
         [400, { message: "#{e.response.errors} - #{e.response.messages}" }.to_json ]
@@ -57,16 +55,16 @@ module Cloudflare
 
     end
 
-    def delete_rule(domain, app_url)
+    def delete_rule(domain, rule_id)
       client, zone_id = Cloudflare::Common.connect(domain)
-      rule_id = find_rule(domain, app_url)
+      # rule_id = find_rule(domain, app_url)
       # binding.pry
-      if rule_id
+      # if rule_id
         rule = client.delete("zones/#{zone_id}/pagerules/#{rule_id}")
-        [201, message: "Page Rule deleted for #{app_url}".to_json]
-      else
-        [404, message: "Page Rule not found for #{app_url}".to_json]
-      end
+        [201, message: "Page Rule deleted for #{rule_id}".to_json]
+      # else
+        # [404, message: "Page Rule not found for #{app_url}".to_json]
+      # end
     end
   end
 end

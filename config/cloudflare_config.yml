@@ -1,6 +1,10 @@
 common: &common
   email: <%= ENV['CLOUDFLARE_EMAIL'] %>
   api_key: <%= ENV['CLOUDFLARE_API_KEY'] %>
+  test_app_url: <%= ENV['TEST_APP_URL'] %>
+  test_domain: <%= ENV['TEST_DOMAIN'] %>
+  test_forward_url: <%= ENV['TEST_FORWARD_URL'] %>
+  test_rule_id: <%= ENV['TEST_RULE_ID'] %>
 
 <%= Rails.env %>:
   <<: *common
