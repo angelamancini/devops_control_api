@@ -24,6 +24,14 @@ require 'rspec/rails'
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+VCR.configure do |config|
+  config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
+  config.hook_into :webmock
+  Rails.application.secrets.each do |k,v|
+    config.filter_sensitive_data("<#{k}>") { v }
+  end
+end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

@@ -1,7 +1,7 @@
 common: &common
-  github-key: <%= ENV['GITHUB_KEY'] %>
-  github-secret: <%= ENV['GITHUB_SECRET'] %>
-  token-salt: <%= ENV['TOKEN_SALT'] %>
+  github-key: Rails.application.secrets.github_key
+  github-secret: Rails.application.secrets.github_secret
+  token-salt: Rails.application.secrets.token_salt
 
 <%= Rails.env %>:
   <<: *common

@@ -33,6 +33,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails'
   gem 'ffaker'
@@ -43,7 +44,6 @@ end
 
 group :test do
   gem "codeclimate-test-reporter", require: nil
-  gem 'webmock'
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
