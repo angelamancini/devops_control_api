@@ -11,7 +11,7 @@ module Cloudflare
     def self.connect(domain)
       begin
         # binding.pry
-        client = Rubyflare.connect_with(CLOUDFLARE_CONFIG['email'], CLOUDFLARE_CONFIG['api_key'])
+        client = Rubyflare.connect_with(Rails.application.secrets.cloudflare_email, Rails.application.secrets.cloudflare_api_key)
         # binding.pry
         zones = client.get("zones?name=#{domain}")
         return client, zones.result[:id]

@@ -3,12 +3,12 @@ require 'page_rule'
 require 'common'
 
 describe Cloudflare::PageRule do
-  let(:domain) { ENV['TEST_DOMAIN'] }
-  let(:app_url) { ENV['TEST_APP_URL'] }
-  let(:forwarding_url) { ENV['TEST_FORWARD_URL'] }
-  let(:client) { Rubyflare.connect_with(CLOUDFLARE_CONFIG['email'], CLOUDFLARE_CONFIG['api_key']) }
+  let(:domain) { Rails.application.secrets.test_domain }
+  let(:app_url) { Rails.application.secrets.test_app_url }
+  let(:forwarding_url) { Rails.application.secrets.test_forward_url }
+  let(:client) { Cloudflare::Common.connect(domain) }
   let(:zone_id) { client.get("zones?name=##{domain}") }
-  let(:rule_id) { ENV['TEST_RULE_ID'] }
+  let(:rule_id) { Rails.application.secrets.test_rule_id }
 
   describe '#create_redirect' do
     it 'creates a temporary redirect and returns a 201' do

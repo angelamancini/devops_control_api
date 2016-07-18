@@ -30,6 +30,8 @@ VCR.configure do |config|
   Rails.application.secrets.each do |k,v|
     config.filter_sensitive_data("<#{k}>") { v }
   end
+  config.filter_sensitive_data('"type":"organization","id":"<organization_id>"') {/\"type\":\"organization\",\"id\":\".*\"/}
+  config.filter_sensitive_data('"name":"<name>"') { /"name":".*"/}
 end
 
 RSpec.configure do |config|
