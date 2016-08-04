@@ -25,3 +25,4 @@ tmux-client-*.log
 coverage/
 
 .env
+.env.*
