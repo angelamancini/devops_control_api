@@ -23,4 +23,4 @@ ADD . /app
 ENV RAILS_ENV production
 WORKDIR /app
 
-CMD ["bundle", "exec", "rails", "s", "-p", "8080"]
+CMD ["bundle", "exec", "rails", "s", "-p", "3000"]

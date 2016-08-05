@@ -17,4 +17,5 @@ test:
   <<: *common
 
 production:
-  <<: *common  
+  <<: *common
+  port: <%= ENV['DB_PORT'] %> 
