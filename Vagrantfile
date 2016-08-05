@@ -8,6 +8,7 @@ vagrantfile_api_version = "2"
 box_params = {
   box: 'angelamancini/devbox',
   hostname: 'aws-api',
+  playbook: 'ansible/playbook.yml'
 }
 # ports to forward
 PORTS = [
@@ -21,8 +22,16 @@ Vagrant.configure(vagrantfile_api_version) do |config|
 
     # explicitly set hostname, because reasons
     box.vm.provision :shell, inline: "hostnamectl set-hostname #{box_params[:hostname]}" if box.vm.box == 'amancini/devbox'
-
+    # provision the thing
+    box.vm.provision :ansible do |ansible|
+      ansible.playbook = box_params.fetch :playbook
+    end
   end
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "6000"
+  end
+
   # key stuff
   # config.ssh.private_key_path = "~/.ssh/id_rsa"
   config.ssh.forward_agent = true

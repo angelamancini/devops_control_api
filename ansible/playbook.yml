@@ -1,0 +1,14 @@
+---
+- name: Provision Devops Control API
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: set up docker permissions
+      become: yes
+      command: '{{ item }}'
+      with_items:
+        - "usermod -aG docker vagrant"
+
+    - name: turn on docker
+      service: name=docker state=started
