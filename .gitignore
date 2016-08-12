@@ -25,3 +25,6 @@ tmux-client-*.log
 coverage/
 
 .env
+.env.*
+ansible/roles/*
+ansible/playbook.retry

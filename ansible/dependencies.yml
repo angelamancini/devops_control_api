@@ -1,0 +1,6 @@
+# galaxy_roles.yml
+# use the command `ansible-galaxy install -r dependencies.yml [-p <path/to/roles/>]` to install these roles :D
+
+# roles from ansible galaxy https://galaxy.ansible.com
+- src: geerlingguy.git
+- src: rvm_io.rvm1-ruby

@@ -33,7 +33,6 @@ group :development do
 end
 
 group :development, :test do
-  gem 'dotenv-rails'
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails'
   gem 'ffaker'
@@ -52,3 +51,4 @@ gem 'aws-sdk', '~> 2'
 gem 'octokit'
 gem 'right_api_client'
 gem 'rubyflare'
+gem 'dotenv-rails'

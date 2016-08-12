@@ -1,0 +1,7 @@
+rvm1_install_path: '/usr/local/rvm'
+rvm1_rubies:
+  - 'ruby-2.3.1'
+
+rvm1_user: 'root'
+rvm1_rvm_version: 'stable'
+rvm1_rvm_check_for_updates: True

@@ -1,0 +1,49 @@
+---
+- name: Provision Devops Control API
+  hosts: all
+  become: yes
+
+  vars_files:
+    - vars/git.yml
+    - vars/rvm1-ruby.yml
+
+  roles:
+    - geerlingguy.git
+    - rvm_io.rvm1-ruby
+
+  tasks:
+    - name: Install Vim
+      become: yes
+      yum: name=vim state=latest
+
+    - name: Custom Prompt
+      become: yes
+      copy: src=files/custom_prompt.sh dest=/etc/profile.d/custom_prompt.sh
+
+    - name: Add docker repo
+      become: yes
+      yum_repository:
+        name: dockerrepo
+        description: docker YUM repo
+        baseurl: https://yum.dockerproject.org/repo/main/centos/7/
+        enabled: yes
+        gpgcheck: yes
+        gpgkey: https://yum.dockerproject.org/gpg
+
+    - name: Install docker
+      become: yes
+      yum: name=docker-engine state=latest
+
+    - name: Install docker-compose
+      become: yes
+      get_url: url=https://github.com/docker/compose/releases/download/1.8.0/docker-compose-Linux-x86_64 dest=/usr/local/bin/docker-compose mode=0755
+    - name: add docker group
+      become: yes
+      group: name=docker state=present
+    - name: Fix docker permissions
+      become: yes
+      command: 'usermod -aG docker vagrant'
+
+    - name: start docker
+      become: yes
+      service: name=docker state=started enabled=yes
