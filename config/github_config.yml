@@ -1,7 +1,0 @@
-common: &common
-  github-key: Rails.application.secrets.github_key
-  github-secret: Rails.application.secrets.github_secret
-  token-salt: Rails.application.secrets.token_salt
-
-<%= Rails.env %>:
-  <<: *common
