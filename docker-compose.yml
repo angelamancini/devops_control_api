@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  database:
+    image: 'mysql'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'mypassword'
+    ports:
+      - '13306:3306'
+
+  api:
+    depends_on:
+      - 'database'
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - '.:/api'
+    env_file:
+      - '.env'
+    links:
+      - database:mysql
