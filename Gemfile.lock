@@ -96,7 +96,6 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.9.0)
     multipart-post (2.0.0)
-    mysql2 (0.4.4)
     netrc (0.11.0)
     nio4r (1.2.1)
     nokogiri (1.6.8)
@@ -104,6 +103,7 @@ GEM
       pkg-config (~> 1.1.7)
     octokit (4.3.0)
       sawyer (~> 0.7.0, >= 0.5.3)
+    pg (0.18.4)
     pkg-config (1.1.7)
     pry (0.10.4)
       coderay (~> 1.1.0)
@@ -218,8 +218,8 @@ DEPENDENCIES
   ffaker
   jwt
   listen (~> 3.1)
-  mysql2
   octokit
+  pg
   pry
   puma (~> 3.0)
   rails (~> 5.0.0)
