@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.cloudflare.com/client/v4/zones?name=
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      X-Auth-Email:
+      - angela.mancini@sage.com
+      X-Auth-Key:
+      - 6d4824a9bfa83fe4c11c18062e2899c0fcabb
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 15 Jul 2016 19:48:11 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d1a34ac09682d37668bfee9a045c955881468612091; expires=Sat, 15-Jul-17
+        19:48:11 GMT; path=/; domain=.cloudflare.com; HttpOnly
+      Expires:
+      - Sun, 25 Jan 1981 05:00:00 GMT
+      Cache-Control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 2c2fbb0270850a00-ATL
+    body:
+      encoding: ASCII-8BIT
+      string: '{"result":[],"result_info":{"page":1,"per_page":20,"total_pages":0,"count":0,"total_count":0},"success":true,"errors":[],"messages":[]}'
+    http_version: 
+  recorded_at: Fri, 15 Jul 2016 19:48:11 GMT
+recorded_with: VCR 3.0.3

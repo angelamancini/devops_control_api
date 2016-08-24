@@ -1,26 +1,22 @@
-FROM centos:latest
-MAINTAINER Angela Mancini
+FROM ruby:2.3-slim
 
-EXPOSE 3000
+MAINTAINER Angela Mancini <angela.mancini@sage.com>
 
-ADD Gemfile /app/
-ADD Gemfile.lock /app/
+RUN apt-get update && apt-get install -qq -y --no-install-recommends \
+      build-essential nodejs libpq-dev git libcurl4-openssl-dev
 
-RUN yum -y update && yum clean all
-RUN yum -y install openssl openssl-devel libyaml-devel libxml2 limxml2-devel libxslt-devel gcc zlib-devel rpm-build curl curl-devel gcc-g++ gcc-c++ libstdc++-devel mysql-devel
+ENV INSTALL_PATH /api
 
-# install ruby 2.3.1
-ADD https://github.com/erumble/ruby-rpm/releases/download/2.3.1/ruby-2.3.1-1.el7.centos.x86_64.rpm /tmp
+RUN mkdir -p $INSTALL_PATH
 
-RUN rpm -i /tmp/ruby-2.3.1-1.el7.centos.x86_64.rpm
+WORKDIR $INSTALL_PATH
 
-# bundle install
-RUN gem install bundler && \
-    cd /app ; bundle config build.nokogiri --use-system-libraries && bundle install --without development test
+COPY Gemfile Gemfile.lock ./
 
-ADD . /app
+RUN bundle install --binstubs
 
-ENV RAILS_ENV production
-WORKDIR /app
+COPY . .
 
-CMD ["bundle", "exec", "rails", "s", "-p", "3000"]
+VOLUME ["$INSTALL_PATH/public"]
+
+CMD puma -C config/puma.rb

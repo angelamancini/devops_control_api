@@ -26,3 +26,5 @@ coverage/
 
 .env
 .env.*
+ansible/roles/*
+ansible/playbook.retry
