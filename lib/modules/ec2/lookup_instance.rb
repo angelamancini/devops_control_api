@@ -3,21 +3,6 @@ module Ec2
 
   class LookupInstance
 
-    # Returns the ec2 object bucket
-    #
-    # @example
-    #   client(region) # => #<Aws::S3::Bucket name="bucket name">
-    #
-    # @param region [String] the aws region the bucket is in
-    # @param bucket [String] the s3 bucket to perform operations on
-    # @return [#<Aws::S3::Bucket name="bucket name">]
-    def self.client(region)
-      ec2 = Aws::EC2::Resource.new(
-        region: region
-      )
-
-    end
-
     # Takes the filter term and calls the correct lookup method
     # @param filter [String, Array] the filter method to find instances. Array
     # to look up tags, String for other methods
@@ -114,7 +99,7 @@ module Ec2
     # @return [Array]
     def lookup(region, filter)
       begin
-        @ec2 = LookupInstance.client(region)
+        @ec2 = Ec2.client(region)
         instances = parse_filter(filter)
         instance_data = []
         instances.each do |instance|
