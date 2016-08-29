@@ -28,3 +28,5 @@ coverage/
 .env.*
 ansible/roles/*
 ansible/playbook.retry
+awscli-bundle/
+awscli-bundle*

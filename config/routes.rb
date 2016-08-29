@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       get 'ec2/lookup_instance', to: 'ec2_lookup#index', as: 'ec2_lookup_instance'
       post 'cloudflare/page_rule/new', to: 'page_rules#create', as: 'page_rule_create'
       post 'cloudflare/page_rule/delete', to: 'page_rules#delete', as: 'page_rule_delete'
-
     end
   end
+  get 'health_check', to: 'health_check#index', as: 'health_check'
 end
