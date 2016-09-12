@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  namespace :api, defaults: { format: :json },
-                              constraints: { subdomain: 'api' }, path: '/'  do
+  namespace :api, defaults: { format: :json }, path: '/'  do
     scope module: :v1,
                   constraints: ApiConstraints.new(version: 1, default: true) do
       get 'health_check', to: 'health_check#index', as: 'health_check'
@@ -12,5 +11,4 @@ Rails.application.routes.draw do
       post 'cloudflare/page_rule/delete', to: 'page_rules#delete', as: 'page_rule_delete'
     end
   end
-  get 'health_check', to: 'health_check#index', as: 'health_check'
 end
