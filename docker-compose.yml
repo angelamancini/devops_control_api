@@ -3,6 +3,7 @@ version: '2'
 services:
   api:
     build: .
+    image: lsm/api
     ports:
       - '3000:3000'
     volumes:

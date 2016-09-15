@@ -19,4 +19,4 @@ COPY . .
 
 VOLUME ["$INSTALL_PATH/public"]
 
-CMD puma -C config/puma.rb
+CMD bundle exec unicorn -c config/unicorn.rb
